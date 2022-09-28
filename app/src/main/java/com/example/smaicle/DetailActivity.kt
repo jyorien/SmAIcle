@@ -24,8 +24,22 @@ class DetailActivity : AppCompatActivity() {
                 (binding.instructionsList.adapter as CheckboxAdapter).submitList(instructionsList)
             }
             "upcycle" -> {
+                val upcyclingTips = intent.extras?.getBundle("bundle")?.getSerializable(UPCYCLING) as HashMap<String, String>
+                val ideas = mutableListOf<Idea>()
+                upcyclingTips.forEach {
+                    val idea = Idea(it.key, it.value)
+                    ideas.add(idea)
+                }
+                binding.instructionsList.adapter = IdeaAdapter()
+                (binding.instructionsList.adapter as IdeaAdapter).submitList(ideas)
+                Log.d("hello", upcyclingTips.toString())
 
             }
         }
     }
 }
+
+data class Idea(
+    val title: String,
+    val url: String
+)

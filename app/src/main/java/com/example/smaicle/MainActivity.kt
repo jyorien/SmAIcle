@@ -27,7 +27,7 @@ const val EVENT = "EVENT"
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var recyclingInstructions = arrayListOf<String>()
-    private var upcyclingInstructions = emptyMap<String, String>()
+    private var upcyclingTips = hashMapOf<String, String>()
     @RequiresApi(Build.VERSION_CODES.O)
     private val client = RetrofitService.getClient()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                                     val upcycling = JSONObject(JSONArray(obj["upcycling"].toString())[0].toString())
                                     val recyclingList = arrayListOf<String>()
                                     val upcyclingKeys = upcycling.keys()
-                                    val upcyclingMap = mutableMapOf<String, String>()
+                                    val upcyclingMap = hashMapOf<String, String>()
                                     upcyclingKeys.forEach {
                                         upcyclingMap[it] = upcycling[it].toString()
                                     }
@@ -98,6 +98,7 @@ class MainActivity : AppCompatActivity() {
                                     Log.d("hello", recycling.toString())
                                     recyclingInstructions = recyclingList
                                     Log.d("hello", upcyclingMap.toString())
+                                    upcyclingTips = upcyclingMap
                                 }
                                 val bytes = Base64.decode(imageString, Base64.DEFAULT)
                                 val bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
@@ -127,6 +128,9 @@ class MainActivity : AppCompatActivity() {
         binding.btnUpcyclingIdeas.setOnClickListener {
             Intent(this, DetailActivity::class.java).also {
                 it.putExtra(EVENT, "upcycle")
+                val b= Bundle()
+                b.putSerializable(UPCYCLING, upcyclingTips)
+                it.putExtra("bundle", b)
                 startActivity(it)
                 overridePendingTransition(R.anim.slide_up, R.anim.slide_down)
             }
