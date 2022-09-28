@@ -1,5 +1,6 @@
 package com.example.smaicle
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
@@ -20,8 +21,13 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.*
 
+const val UPCYCLING = "UPCYCLING"
+const val RECYCLING = "RECYCLING"
+const val EVENT = "EVENT"
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private var recyclingInstructions = arrayListOf<String>()
+    private var upcyclingInstructions = emptyMap<String, String>()
     @RequiresApi(Build.VERSION_CODES.O)
     private val client = RetrofitService.getClient()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,16 +82,21 @@ class MainActivity : AppCompatActivity() {
                                     val obj = JSONObject(segmentedObjects[key].toString())
                                     val recycling = JSONArray(obj["recycling"].toString())
                                     val upcycling = JSONObject(JSONArray(obj["upcycling"].toString())[0].toString())
+                                    val recyclingList = arrayListOf<String>()
                                     val upcyclingKeys = upcycling.keys()
                                     val upcyclingMap = mutableMapOf<String, String>()
                                     upcyclingKeys.forEach {
                                         upcyclingMap[it] = upcycling[it].toString()
+                                    }
+                                    for (i in 0 until recycling.length()) {
+                                        recyclingList.add(recycling[i].toString())
                                     }
                                     // recycling and upcycling data
 //                                    ["Crush the bottle.","Remove the cap.","Squeeze out the air.","Put the bottle cap back on.","Throw it into the plastic bin."]
 //                                    {Practical ways to upcycle bottles=https://www.treehugger.com/creative-ways-upcycle-your-plastic-bottles-4864134,
 //                                    38 creative ideas with bottles=https://www.youtube.com/watch?v=xEAOvFG1AmM}
                                     Log.d("hello", recycling.toString())
+                                    recyclingInstructions = recyclingList
                                     Log.d("hello", upcyclingMap.toString())
                                 }
                                 val bytes = Base64.decode(imageString, Base64.DEFAULT)
@@ -104,6 +115,21 @@ class MainActivity : AppCompatActivity() {
         })
         binding.btnCapture.setOnClickListener {
             binding.cameraView.takePicture()
+        }
+        binding.btnRecycleInstructions.setOnClickListener {
+            Intent(this, DetailActivity::class.java).also {
+                it.putExtra(EVENT, "recycle")
+                it.putStringArrayListExtra(RECYCLING, recyclingInstructions)
+                startActivity(it)
+                overridePendingTransition(R.anim.slide_up, R.anim.slide_down)
+            }
+        }
+        binding.btnUpcyclingIdeas.setOnClickListener {
+            Intent(this, DetailActivity::class.java).also {
+                it.putExtra(EVENT, "upcycle")
+                startActivity(it)
+                overridePendingTransition(R.anim.slide_up, R.anim.slide_down)
+            }
         }
         enableCapturingState()
     }
