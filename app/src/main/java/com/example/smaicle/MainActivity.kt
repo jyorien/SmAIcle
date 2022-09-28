@@ -16,6 +16,7 @@ import com.otaliastudios.cameraview.PictureResult
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.*
 
@@ -66,13 +67,27 @@ class MainActivity : AppCompatActivity() {
 
                         lifecycleScope.launchWhenCreated {
                             val response = client.getLabelledImage(body)
-                            Log.d("hello","hello")
-                            Log.d("hello", response.body().toString())
                             response.body()?.string()?.let { json ->
                                 val jsonObject = JSONObject(json)
                                 val imageString = jsonObject["base64_image"].toString()
-                                val recycling = jsonObject["segmented_objects"].toString()
-                                Log.d("hello", recycling)
+                                val segmentedObjects = JSONObject(jsonObject["segmented_objects"].toString())
+                                val objectKeys = segmentedObjects.keys()
+                                objectKeys.forEach { key ->
+                                    val obj = JSONObject(segmentedObjects[key].toString())
+                                    val recycling = JSONArray(obj["recycling"].toString())
+                                    val upcycling = JSONObject(JSONArray(obj["upcycling"].toString())[0].toString())
+                                    val upcyclingKeys = upcycling.keys()
+                                    val upcyclingMap = mutableMapOf<String, String>()
+                                    upcyclingKeys.forEach {
+                                        upcyclingMap[it] = upcycling[it].toString()
+                                    }
+                                    // recycling and upcycling data
+//                                    ["Crush the bottle.","Remove the cap.","Squeeze out the air.","Put the bottle cap back on.","Throw it into the plastic bin."]
+//                                    {Practical ways to upcycle bottles=https://www.treehugger.com/creative-ways-upcycle-your-plastic-bottles-4864134,
+//                                    38 creative ideas with bottles=https://www.youtube.com/watch?v=xEAOvFG1AmM}
+                                    Log.d("hello", recycling.toString())
+                                    Log.d("hello", upcyclingMap.toString())
+                                }
                                 val bytes = Base64.decode(imageString, Base64.DEFAULT)
                                 val bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
                                 binding.imgView.setImageBitmap(bmp)
