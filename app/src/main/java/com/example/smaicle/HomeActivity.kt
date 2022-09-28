@@ -17,5 +17,14 @@ class HomeActivity : AppCompatActivity() {
                 startActivity(it)
             }
         }
+        binding.btnGoRewards.setOnClickListener {
+            Intent(this, RewardActivity::class.java).also { startActivity(it) }
+        }
+        binding.btnGoGoals.setOnClickListener {
+            Intent(this, GoalActivity::class.java).also { startActivity(it) }
+        }
+        binding.btnGoProjects.setOnClickListener {
+            Intent(this, FeedActivity::class.java).also { startActivity(it) }
+        }
     }
 }

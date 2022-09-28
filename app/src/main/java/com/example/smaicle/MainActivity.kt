@@ -135,6 +135,9 @@ class MainActivity : AppCompatActivity() {
                 overridePendingTransition(R.anim.slide_up, R.anim.slide_down)
             }
         }
+        binding.btnRecycle.setOnClickListener {
+            Intent(this, ApprovalActivity::class.java).also { startActivity(it) }
+        }
         enableCapturingState()
     }
 

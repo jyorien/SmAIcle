@@ -1,5 +1,6 @@
 package com.example.smaicle
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
+        supportActionBar?.hide()
         setContentView(binding.root)
         binding.btnFinish.setOnClickListener {
             finish()
@@ -32,6 +34,10 @@ class DetailActivity : AppCompatActivity() {
                 }
                 binding.instructionsList.adapter = IdeaAdapter()
                 (binding.instructionsList.adapter as IdeaAdapter).submitList(ideas)
+                binding.btnFinish.text = "View More Ideas"
+                binding.btnFinish.setOnClickListener {
+                    Intent(this, FeedActivity::class.java).also { startActivity(it) }
+                }
                 Log.d("hello", upcyclingTips.toString())
 
             }
