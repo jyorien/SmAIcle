@@ -1,5 +1,6 @@
 package com.example.smaicle.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,8 +35,8 @@ class GoalVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         progressTextView.text = progressText
         pointsView.text = "${goal.points} POINTS"
 
-        val progressPercentage = goal.currentProgress / goal.totalProgress * 100
-        progressView.progress = progressPercentage
+        val progressPercentage = (goal.currentProgress.toFloat() / goal.totalProgress ) * 100
+        progressView.progress = progressPercentage.toInt()
 
     }
 }
