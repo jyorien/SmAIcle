@@ -1,13 +1,14 @@
 
 # SmAIcle
+## People
+This project was a collaboration between Rachel Tan, Pek Yi Chern & Joey Lim from Singapore Polytechnic and Temasek Polytechnic.
+
 ## Awards
 [Splash Awards 2022](https://www.scs.org.sg/awards/splash/2022/announcements)
 - 2nd Runner Up (Overall)
 - Challenge Track Award (AI in Sustainability)
 
 ## Objective
-
-
 Our project aims to increase Singapore’s recycling rates by addressing the issue of contamination, which occurs when recyclables are thrown into the wrong bin or if they have been improperly prepared before disposal. According to Ms Grace Fu, Minister for Sustainability and the Environment, the current contamination rate is around 40%. Furthermore, only 60% of rubbish thrown into recycling bins is recyclable. With contamination, the amount recycled is even lower. Despite government efforts to streamline recycling by adopting the dual chute system in 2014, domestic recycling rates remain low at 13% when the target is 30% by 2030. 
 
 The issue is due to the lack of awareness of how to properly recycle rubbish or what they can do to upcycle it. Additionally, promoting upcycling would reduce the amount of waste sent to landfills, hence minimising pollution and greenhouse gases which contributes to environmental sustainability.
