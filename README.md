@@ -1,5 +1,9 @@
 
-# SmAIcle-XML
+# SmAIcle
+## Awards
+[Splash Awards 2022](https://www.scs.org.sg/awards/splash/2022/announcements)
+- 2nd Runner Up (Overall)
+- Challenge Track Award (AI in Sustainability)
 
 ## Objective
 
